@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { API_URL } from '../config';
 
 interface Data {
   id: string;
@@ -22,7 +23,7 @@ export default function PlansAdvertPage() {
     fetchMe();
 
     async function fetchMe() {
-      const res = await fetch('http://localhost:5500/api/v2/plans', { method: 'GET' });
+      const res = await fetch(`${API_URL}/plans`, { method: 'GET' });
       const body = await res.json();
       setPlans(
         body.advert.sort((a: Data, b: Data) => {

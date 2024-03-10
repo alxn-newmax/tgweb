@@ -25,7 +25,7 @@ const sidebarList = [
     label: 'Поставки',
   },
   {
-    link: '/data',
+    link: '/data/nomenclature',
     icon: 'solar:database-bold-duotone',
     label: 'Данные',
   },

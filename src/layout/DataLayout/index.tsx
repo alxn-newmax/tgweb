@@ -6,9 +6,17 @@ export default function DataLayout() {
   const currentTab = location.pathname;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', p: '30px', width: '100%', height: '100vh' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexGrow: 1,
+        flexDirection: 'column',
+        p: '30px',
+        maxWidth: 'calc(100vw - 290px)',
+      }}
+    >
       <h1>Данные</h1>
-      <Box sx={{ width: '100%', m: '20px 0', bgcolor: 'background.paper' }}>
+      <Box sx={{ m: '20px 0' }}>
         <Tabs value={currentTab} centered>
           <Tab label="Номеклатура" value={'/data/nomenclature'} component={Link} to={'/data/nomenclature'} />
           <Tab label="Компании" value={'/data/campaings'} component={Link} to={'/data/campaings'} />
@@ -17,7 +25,9 @@ export default function DataLayout() {
           <Tab label="Склады" value={'/data/warehouse'} component={Link} to={'/data/warehouse'} />
         </Tabs>
       </Box>
-      <Outlet />
+      <div id="table-container" style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+        <Outlet />
+      </div>
     </Box>
   );
 }

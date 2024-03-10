@@ -4,9 +4,10 @@ import { images } from '../../config/images';
 
 type SidebarProfileProps = {
   isOpen: boolean;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
-export default function SidebarProfile({ isOpen }: SidebarProfileProps) {
+export default function SidebarProfile({ isOpen, onClick }: SidebarProfileProps) {
   return (
     <Box sx={{ p: '8px 0' }}>
       <Box
@@ -19,6 +20,7 @@ export default function SidebarProfile({ isOpen }: SidebarProfileProps) {
           padding: '8px',
           ':hover': { backgroundColor: '#333333' },
         }}
+        onClick={onClick}
       >
         <Box sx={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
           <img src={images.avatar} alt="avatar" style={{ width: '36px', height: '36px' }} />

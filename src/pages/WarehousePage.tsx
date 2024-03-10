@@ -1,6 +1,7 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Switch, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { images } from '../config/images';
+import { API_URL } from '../config';
 
 type CardType = {
   id: string;
@@ -20,7 +21,7 @@ export default function WarehousePage() {
     fetchMe();
 
     async function fetchMe() {
-      const res = await fetch('http://localhost:5500/api/v2/wh', { method: 'GET' });
+      const res = await fetch(`${API_URL}/wh`, { method: 'GET' });
       const body = await res.json();
       const sorted: CardType[] = body.data.sort((a: CardType, b: CardType) => {
         if (!a.is_basic && b.is_basic) return 1;

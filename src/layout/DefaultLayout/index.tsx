@@ -4,7 +4,7 @@ import Sidebar from '../../components/Sidebar';
 
 const LoadingSpinner = () => {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', height: '100vh' }}>
       <Sidebar />
       <Outlet />
     </Box>

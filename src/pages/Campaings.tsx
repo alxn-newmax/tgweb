@@ -1,76 +1,155 @@
-import { useEffect, useState } from 'react';
-import moment from 'moment';
-import Box from '@mui/material/Box';
+import { type UIEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Checkbox,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableSortLabel,
-  Toolbar,
-  Tooltip,
-  Typography,
-  alpha,
-} from '@mui/material';
-import { GridDeleteIcon, GridFilterListIcon } from '@mui/x-data-grid';
-import { visuallyHidden } from '@mui/utils';
-// import { fdate } from '@utils/FormatDate';
+  MaterialReactTable,
+  useMaterialReactTable,
+  type MRT_ColumnDef,
+  type MRT_ColumnFiltersState,
+  type MRT_SortingState,
+  type MRT_RowVirtualizer,
+} from 'material-react-table';
+import { Typography } from '@mui/material';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { API_URL } from '../config';
 
-interface Data {
-  id: string;
-  company: string;
-  amount: number;
-  nmid: number;
-  tax: string;
-  date: string;
-}
+type UserApiResponse = {
+  data: Array<User>;
+  meta: {
+    totalRowCount: number;
+  };
+};
+
+type User = {
+  firstName: string;
+  lastName: string;
+  address: string;
+  state: string;
+  phoneNumber: string;
+};
+
+const columns: MRT_ColumnDef<User>[] = [
+  {
+    accessorKey: 'firstName',
+    header: 'First Name',
+  },
+  {
+    accessorKey: 'lastName',
+    header: 'Last Name',
+  },
+  {
+    accessorKey: 'address',
+    header: 'Address',
+  },
+  {
+    accessorKey: 'state',
+    header: 'State',
+  },
+  {
+    accessorKey: 'phoneNumber',
+    header: 'Phone Number',
+  },
+];
+
+const fetchSize = 25;
 
 export default function CampaingsPage() {
-  const [campaings, setCampaings] = useState<Data[]>([]);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+  const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
 
-  useEffect(() => {
-    fetchMe();
+  const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([]);
+  const [globalFilter, setGlobalFilter] = useState<string>();
+  const [sorting, setSorting] = useState<MRT_SortingState>([]);
 
-    async function fetchMe() {
-      const res = await fetch('http://localhost:5500/api/v2/compaigns', { method: 'GET' });
-      const body = await res.json();
-      setCampaings(body.data);
-    }
-  }, []);
+  const { data, fetchNextPage, isError, isFetching, isLoading } = useInfiniteQuery<UserApiResponse>({
+    queryKey: ['table-data', columnFilters, globalFilter, sorting],
+    queryFn: async ({ pageParam }) => {
+      const url = new URL(`${API_URL}/compaigns`);
+      url.searchParams.set('start', `${(pageParam as number) * fetchSize}`);
+      url.searchParams.set('size', `${fetchSize}`);
+      url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));
+      url.searchParams.set('globalFilter', globalFilter ?? '');
+      url.searchParams.set('sorting', JSON.stringify(sorting ?? []));
 
-  return (
-    <Box sx={{ width: '100%' }}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Артикул</TableCell>
-              <TableCell>Компания</TableCell>
-              <TableCell align="right">Стоимость</TableCell>
-              <TableCell align="right">Налог</TableCell>
-              <TableCell>Дата</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {campaings.map((row) => (
-              <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  {row.nmid}
-                </TableCell>
-                <TableCell>{row.company}</TableCell>
-                <TableCell align="right">{row.amount}</TableCell>
-                <TableCell align="right">{row.tax}</TableCell>
-                <TableCell>{moment(row.date, 'x').format('DD.MM.YYYY')}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+      const response = await fetch(url.href);
+      const json = (await response.json()) as UserApiResponse;
+      return json;
+    },
+    initialPageParam: 0,
+    getNextPageParam: (_lastGroup, groups) => groups.length,
+    refetchOnWindowFocus: false,
+  });
+
+  const flatData = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data]);
+
+  const totalDBRowCount = data?.pages?.[0]?.meta?.totalRowCount ?? 0;
+  const totalFetched = flatData.length;
+
+  //called on scroll and possibly on mount to fetch more data as the user scrolls and reaches bottom of table
+  const fetchMoreOnBottomReached = useCallback(
+    (containerRefElement?: HTMLDivElement | null) => {
+      if (containerRefElement) {
+        const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
+        //once the user has scrolled within 400px of the bottom of the table, fetch more data if we can
+        if (scrollHeight - scrollTop - clientHeight < 400 && !isFetching && totalFetched < totalDBRowCount) {
+          fetchNextPage();
+        }
+      }
+    },
+    [fetchNextPage, isFetching, totalFetched, totalDBRowCount]
   );
+
+  //scroll to top of table when sorting or filters change
+  useEffect(() => {
+    //scroll to the top of the table when the sorting changes
+    try {
+      rowVirtualizerInstanceRef.current?.scrollToIndex?.(0);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [sorting, columnFilters, globalFilter]);
+
+  //a check on mount to see if the table is already scrolled to the bottom and immediately needs to fetch more data
+  useEffect(() => {
+    fetchMoreOnBottomReached(tableContainerRef.current);
+  }, [fetchMoreOnBottomReached]);
+
+  const table = useMaterialReactTable({
+    columns,
+    data: flatData,
+    enablePagination: false,
+    enableRowNumbers: true,
+    enableRowVirtualization: true,
+    manualFiltering: true,
+    manualSorting: true,
+    muiTableContainerProps: {
+      ref: tableContainerRef,
+      sx: { maxHeight: '600px' },
+      onScroll: (event: UIEvent<HTMLDivElement>) => fetchMoreOnBottomReached(event.target as HTMLDivElement), //add an event listener to the table container element
+    },
+    muiToolbarAlertBannerProps: isError
+      ? {
+          color: 'error',
+          children: 'Error loading data',
+        }
+      : undefined,
+    onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: setSorting,
+    renderBottomToolbarCustomActions: () => (
+      <Typography>
+        Fetched {totalFetched} of {totalDBRowCount} total rows.
+      </Typography>
+    ),
+    state: {
+      columnFilters,
+      globalFilter,
+      isLoading,
+      showAlertBanner: isError,
+      showProgressBars: isFetching,
+      sorting,
+    },
+    rowVirtualizerInstanceRef, //get access to the virtualizer instance
+    rowVirtualizerOptions: { overscan: 4 },
+  });
+
+  return <MaterialReactTable table={table} />;
 }

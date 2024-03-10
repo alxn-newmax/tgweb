@@ -1,20 +1,21 @@
-import { Provider } from "react-redux";
-import ReactDOM from "react-dom/client";
+import { Provider } from 'react-redux';
+import ReactDOM from 'react-dom/client';
 
-import App from "./App";
-import { store } from "./store";
-import { ThemeContextProvider } from "./store/themeContext";
+import App from './App';
+import { store } from './store';
+import { ThemeContextProvider } from './store/themeContext';
+import TanstackProvider from './providers/tanstackProvider';
 
-import "./styles/main.sass";
+import './styles/main.sass';
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <Provider store={store}>
     <ThemeContextProvider>
-      <App />
+      <TanstackProvider>
+        <App />
+      </TanstackProvider>
     </ThemeContextProvider>
   </Provider>
 );
