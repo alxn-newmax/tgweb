@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom
 
 import LoadingSpinner from './components/UI/LoadingSpinner';
 
+const LandingPage = lazy(() => import('./pages/Landing'));
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 const DataLayout = lazy(() => import('./layout/DataLayout'));
 const Login = lazy(() => import('./pages/Login'));
@@ -14,13 +15,6 @@ const WarehousePage = lazy(() => import('./pages/WarehousePage'));
 const NomenclaturePage = lazy(() => import('./pages/NomenclaturePage'));
 const PlansAdvertPage = lazy(() => import('./pages/PlansAdvertPage'));
 const PlansSalesPage = lazy(() => import('./pages/PlansSalesPage'));
-
-// user = {
-//   id: '1',
-//   name: 'robin',
-//   permissions: ['analyze'],
-//   roles: ['admin'],
-// }
 
 const ProtectedRoute = ({
   isAllowed,
@@ -36,12 +30,34 @@ const ProtectedRoute = ({
 };
 
 export default function App() {
+  const isAuth = true;
+  const user = {
+    id: '1',
+    name: 'robin',
+    permissions: ['analitics'],
+    roles: ['admin'],
+  };
+
   return (
     <BrowserRouter>
-      <Suspense fallback={<LoadingSpinner />}>
+      <Suspense
+        fallback={
+          isAuth ? (
+            <DefaultLayout>
+              <LoadingSpinner />
+            </DefaultLayout>
+          ) : (
+            'loading'
+          )
+        }
+      >
         <Routes>
-          <Route element={<ProtectedRoute isAllowed={true && ['admin'].includes('admin')} redirectPath="/login" />}>
-            <Route path="/" element={<DefaultLayout />}>
+          <Route path="/" element={isAuth ? <DefaultLayout /> : <LandingPage />}>
+            <Route
+              element={
+                <ProtectedRoute isAllowed={isAuth && user.permissions.includes('analitics')} redirectPath="/login" />
+              }
+            >
               <Route index element={<DashboardPage />} />
               <Route path="/finance" element={<BlankPage />} />
               <Route path="/analytics" element={<BlankPage />} />

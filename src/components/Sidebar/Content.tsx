@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Icon } from '@iconify/react';
-import { Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip, Typography, Zoom } from '@mui/material';
+import { Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip, Zoom } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 
 type ContentProps = {

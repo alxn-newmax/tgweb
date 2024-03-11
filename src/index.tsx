@@ -6,7 +6,7 @@ import { store } from './store';
 import { ThemeContextProvider } from './store/themeContext';
 import TanstackProvider from './providers/tanstackProvider';
 
-import './styles/main.sass';
+import './assets/styles/main.sass';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

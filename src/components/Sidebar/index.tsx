@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
-import MuiDrawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
+import { Box, Drawer, Divider } from '@mui/material';
 import sidebarList from '../../config/sidebarList';
 import Header from './Header';
 import Content from './Content';
-import { Box } from '@mui/material';
-import './Sidebar.sass';
 import Bottom from './Bottom';
+import './Sidebar.sass';
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: 290,
@@ -31,7 +29,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   zIndex: 899,
 });
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
+const MuiDrawer = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   width: 290,
   ...(open && {
     ...openedMixin(theme),
@@ -43,13 +41,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 }));
 
-export default function MiniDrawer() {
+export default function Sidebar() {
   const [open, setOpen] = useState(true);
 
   const handleDrawerClose = () => setOpen(!open);
 
   return (
-    <Drawer
+    <MuiDrawer
       variant="permanent"
       open={open}
       sx={{
@@ -64,6 +62,6 @@ export default function MiniDrawer() {
         <Content isOpen={open} list={sidebarList} />
         <Bottom isOpen={open} />
       </Box>
-    </Drawer>
+    </MuiDrawer>
   );
 }
