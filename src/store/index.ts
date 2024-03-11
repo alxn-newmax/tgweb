@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+// import notesReducer from "../features/notes/NotesSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    // notesReducer
+  },
   devTools: process.env.NODE_ENV === 'development',
 });
 
