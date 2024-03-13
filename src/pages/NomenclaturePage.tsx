@@ -6,10 +6,14 @@ import {
   type MRT_ColumnFiltersState,
   type MRT_SortingState,
   type MRT_RowVirtualizer,
+  type MRT_Row,
 } from 'material-react-table';
 import { MRT_Localization_RU } from 'material-react-table/locales/ru';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { API_URL } from '../config';
+import { Box, Button } from '@mui/material';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { download, generateCsv, mkConfig } from 'export-to-csv';
 
 type UserApiResponse = {
   data: Nomenclature[];
@@ -73,6 +77,12 @@ const columns: MRT_ColumnDef<Nomenclature>[] = [
     enableColumnOrdering: false,
   },
 ];
+
+const csvConfig = mkConfig({
+  fieldSeparator: ',',
+  decimalSeparator: '.',
+  useKeysAsHeaders: true,
+});
 
 const fetchSize = 25;
 
@@ -142,6 +152,17 @@ export default function NomenclaturePage() {
     if (tableContainer && tableToolbar) setHeight(tableContainer.offsetHeight - tableToolbar.offsetHeight);
   }, []);
 
+  const handleExportRows = (rows: MRT_Row<Nomenclature>[]) => {
+    const rowData = rows.map((row) => row.original);
+    const csv = generateCsv(csvConfig)(rowData);
+    download(csvConfig)(csv);
+  };
+
+  const handleExportData = () => {
+    const csv = generateCsv(csvConfig)(flatData);
+    download(csvConfig)(csv);
+  };
+
   const table = useMaterialReactTable({
     columns,
     data: flatData,
@@ -174,6 +195,48 @@ export default function NomenclaturePage() {
           children: 'Error loading data',
         }
       : undefined,
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '16px',
+          padding: '8px',
+          flexWrap: 'wrap',
+        }}
+      >
+        <Button
+          //Экспорт всех данных, которые в настоящее время находятся в таблице (игнорируйте страницу, сортировку, фильтрацию и т. Д.)
+          onClick={handleExportData}
+          startIcon={<FileDownloadIcon />}
+        >
+          Export All Data
+        </Button>
+        <Button
+          disabled={table.getPrePaginationRowModel().rows.length === 0}
+          //Экспорт всех рядов, в том числе со следующей страницы (все еще уважает фильтрацию и сортировку)
+          onClick={() => handleExportRows(table.getPrePaginationRowModel().rows)}
+          startIcon={<FileDownloadIcon />}
+        >
+          Export All Rows
+        </Button>
+        <Button
+          disabled={table.getRowModel().rows.length === 0}
+          //Экспорт всех рядов, как видно на экране (уважение к лиц, сортировке, фильтрации и т. Д.)
+          onClick={() => handleExportRows(table.getRowModel().rows)}
+          startIcon={<FileDownloadIcon />}
+        >
+          Export Page Rows
+        </Button>
+        <Button
+          disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()}
+          // экспорт выделенных строк
+          onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
+          startIcon={<FileDownloadIcon />}
+        >
+          Export Selected Rows
+        </Button>
+      </Box>
+    ),
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
