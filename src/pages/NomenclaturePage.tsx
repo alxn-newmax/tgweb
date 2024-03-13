@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import { type UIEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   MaterialReactTable,
@@ -7,6 +8,7 @@ import {
   type MRT_SortingState,
   type MRT_RowVirtualizer,
   type MRT_Row,
+  MRT_GlobalFilterTextField,
 } from 'material-react-table';
 import { MRT_Localization_RU } from 'material-react-table/locales/ru';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -204,6 +206,7 @@ export default function NomenclaturePage() {
           flexWrap: 'wrap',
         }}
       >
+        <MRT_GlobalFilterTextField table={table} />
         <Button
           //Экспорт всех данных, которые в настоящее время находятся в таблице (игнорируйте страницу, сортировку, фильтрацию и т. Д.)
           onClick={handleExportData}
