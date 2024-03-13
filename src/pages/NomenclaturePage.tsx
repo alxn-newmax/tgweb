@@ -26,10 +26,7 @@ type Nomenclature = {
   title: string;
   vendorCode: string;
   category: string;
-  createdAt: string;
-  deletedAt: null | string;
-  supplier: string;
-  type: string;
+  company: string;
 };
 
 const columns: MRT_ColumnDef<Nomenclature>[] = [
@@ -43,7 +40,7 @@ const columns: MRT_ColumnDef<Nomenclature>[] = [
   //   header: 'Продавец',
   // },
   {
-    accessorKey: 'vendorCode',
+    accessorKey: 'vendorcode',
     header: 'Производитель',
     enableClickToCopy: true,
   },
@@ -64,13 +61,8 @@ const columns: MRT_ColumnDef<Nomenclature>[] = [
     header: 'Бренд',
   },
   {
-    accessorKey: 'supplier',
+    accessorKey: 'company',
     header: 'Компания',
-  },
-  {
-    accessorKey: 'createdAt',
-    header: 'Дата создания',
-    enableColumnOrdering: false,
   },
 ];
 

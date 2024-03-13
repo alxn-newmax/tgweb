@@ -12,7 +12,7 @@ const Header: FC<HeaderProps> = ({ isOpen, onClose }) => {
     <Box sx={{ p: '8px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-around', color: '#fff' }}>
       <div
         className="logo"
-        style={{ cursor: 'pointer', fontWeight: 600, fontSize: 24, display: isOpen ? 'block' : 'none' }}
+        style={{ cursor: 'pointer', fontWeight: 600, fontSize: 24, display: isOpen ? 'block' : 'none', overflow: 'hidden', textWrap: 'nowrap' }}
       >
         Newmax Tech
       </div>
