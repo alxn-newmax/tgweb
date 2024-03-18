@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import UseValidate from '@utils/validateInputs';
+import UseValidate from '../../../utils/validateInputs';
 
 import { Props } from './Input.types';
 import classes from './Input.module.sass';

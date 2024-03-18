@@ -6,7 +6,7 @@ import LoadingSpinner from './components/UI/LoadingSpinner';
 const LandingPage = lazy(() => import('./pages/Landing'));
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 const DataLayout = lazy(() => import('./layout/DataLayout'));
-const Login = lazy(() => import('./pages/Login'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const BlankPage = lazy(() => import('./pages/Blank'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
@@ -73,7 +73,7 @@ export default function App() {
               </Route>
             </Route>
           </Route>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

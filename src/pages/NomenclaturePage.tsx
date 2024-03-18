@@ -143,9 +143,13 @@ export default function NomenclaturePage() {
     const rowData = rows.map((row) => row.original);
     // const csv = generateCsv(csvConfig)(rowData);
     // download(csvConfig)(csv);
+    // const csv = generateCsv(csvConfig)(rowData);
+    // download(csvConfig)(csv);
   };
 
   const handleExportData = () => {
+    // const csv = generateCsv(csvConfig)(flatData);
+    // download(csvConfig)(csv);
     // const csv = generateCsv(csvConfig)(flatData);
     // download(csvConfig)(csv);
   };
