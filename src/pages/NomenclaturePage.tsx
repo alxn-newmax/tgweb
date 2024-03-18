@@ -15,7 +15,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { API_URL } from '../config';
 import { Box, Button } from '@mui/material';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { download, generateCsv, mkConfig } from 'export-to-csv';
+// import { download, generateCsv, mkConfig } from 'export-to-csv';
 
 type UserApiResponse = {
   data: Nomenclature[];
@@ -80,11 +80,11 @@ const columns: MRT_ColumnDef<Nomenclature>[] = [
   },
 ];
 
-const csvConfig = mkConfig({
-  fieldSeparator: ',',
-  decimalSeparator: '.',
-  useKeysAsHeaders: true,
-});
+// const csvConfig = mkConfig({
+//   fieldSeparator: ',',
+//   decimalSeparator: '.',
+//   useKeysAsHeaders: true,
+// });
 
 const fetchSize = 25;
 
@@ -156,13 +156,13 @@ export default function NomenclaturePage() {
 
   const handleExportRows = (rows: MRT_Row<Nomenclature>[]) => {
     const rowData = rows.map((row) => row.original);
-    const csv = generateCsv(csvConfig)(rowData);
-    download(csvConfig)(csv);
+    // const csv = generateCsv(csvConfig)(rowData);
+    // download(csvConfig)(csv);
   };
 
   const handleExportData = () => {
-    const csv = generateCsv(csvConfig)(flatData);
-    download(csvConfig)(csv);
+    // const csv = generateCsv(csvConfig)(flatData);
+    // download(csvConfig)(csv);
   };
 
   const table = useMaterialReactTable({
