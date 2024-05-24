@@ -31,7 +31,7 @@ const ProtectedRoute = ({
 };
 
 export default function App() {
-  const isAuth = false;
+  const isAuth = true;
   const user = {
     id: '1',
     name: 'robin',
