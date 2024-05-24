@@ -86,7 +86,7 @@ export default function NomenclaturePage() {
   const { data, fetchNextPage, isError, isFetching, isLoading } = useInfiniteQuery<UserApiResponse>({
     queryKey: ['table-data', columnFilters, globalFilter, sorting],
     queryFn: async ({ pageParam }) => {
-      const url = new URL(`${API_URL}/nm/list`);
+      const url = new URL(`${API_URL}/nm.list`);
       url.searchParams.set('start', `${(pageParam as number) * fetchSize}`);
       url.searchParams.set('size', `${fetchSize}`);
       url.searchParams.set('filters', JSON.stringify(columnFilters ?? []));

@@ -15,6 +15,7 @@ const WarehousePage = lazy(() => import('./pages/WarehousePage'));
 const NomenclaturePage = lazy(() => import('./pages/NomenclaturePage'));
 const PlansAdvertPage = lazy(() => import('./pages/PlansAdvertPage'));
 const PlansSalesPage = lazy(() => import('./pages/PlansSalesPage'));
+const TgWebOrders = lazy(() => import('./pages/TgWebOrders'));
 
 const ProtectedRoute = ({
   isAllowed,
@@ -30,7 +31,7 @@ const ProtectedRoute = ({
 };
 
 export default function App() {
-  const isAuth = true;
+  const isAuth = false;
   const user = {
     id: '1',
     name: 'robin',
@@ -74,6 +75,7 @@ export default function App() {
             </Route>
           </Route>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/tgweb/orders/:order_key" element={<TgWebOrders />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
