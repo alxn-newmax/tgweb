@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import notesReducer from "../features/notes/NotesSlice";
+import commonReducer from 'reducers/commonReducer';
+import ordersReducer from 'reducers/ordersReducer';
 
 export const store = configureStore({
   reducer: {
-    // notesReducer
+    common: commonReducer,
+    orders: ordersReducer,
   },
   devTools: process.env.NODE_ENV === 'development',
 });

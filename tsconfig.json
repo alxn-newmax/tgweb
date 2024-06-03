@@ -1,35 +1,31 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": "./src",
     "paths": {
-      "@config/*": ["config/*"],
-      "@utils/*": ["utils/*"],
-      "@images/*": ["assets/images/*"],
-      "@components/*": ["components/*"],
+      // "@config/*": ["config/*"],
+      // "@utils/*": ["utils/*"],
+      // "@images/*": ["assets/images/*"]
+      // "@components/*": ["components/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
+    "strictPropertyInitialization": false,
     "module": "esnext",
+    "composite": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "outDir": "./build",
+    "jsx": "react"
   },
   "include": ["src", "declarations.d.ts"],
-  "baseUrl": "./dependencies/nodejs/node_modules",
-  "paths": {
-      "*" : ["*"]
-  },
+  "exclude": ["node_modules", "build"]
 }
