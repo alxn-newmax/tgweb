@@ -1,11 +1,11 @@
 import React from 'react';
+import OrdersList from 'components/OrdersList';
 
 export default function OrdersListPage() {
   return (
-    <div className="tgweb">
-      <div className="content" style={{ margin: '15px', width: '100%' }}>
-        123
-      </div>
-    </div>
+    <>
+      <header>UserInfo</header>
+      <OrdersList />
+    </>
   );
 }

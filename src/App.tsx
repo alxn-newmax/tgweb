@@ -10,7 +10,6 @@ import { Box } from '@mui/material';
 const NotFound = lazy(() => import('./pages/NotFound'));
 const OrdersListPage = lazy(() => import('./pages/OrdersListPage'));
 const OrdersInfoPage = lazy(() => import('./pages/OrdersInfoPage'));
-const OrdersPageCopy = lazy(() => import('./pages/OrdersPage_copy'));
 
 export default function App() {
   const webApp = useContext(WebAppContext);
@@ -33,7 +32,6 @@ export default function App() {
         <Route element={<ProtectedRoute isAllowed={isAuth} redirectPath="/" />}>
           <Route path="/orders" element={<OrdersListPage />} />
           <Route path="/orders/:order_key" element={<OrdersInfoPage />} />
-          <Route path="/orders2/:order_key" element={<OrdersPageCopy />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
