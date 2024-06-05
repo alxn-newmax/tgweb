@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { IconButton, Snackbar } from '@mui/material';
-import { ContentCopy } from '@mui/icons-material';
-import classes from './Header.module.sass';
 import { useSelector } from 'react-redux';
-import { ordersSelector } from 'reducers/ordersReducer';
+import { ContentCopy } from '@mui/icons-material';
+import { IconButton, Snackbar } from '@mui/material';
 import { SnackbarState } from 'types';
+import { ordersSelector } from 'reducers/ordersReducer';
+import classes from './Header.module.sass';
 
 export default function Header() {
   const { active } = useSelector(ordersSelector);
@@ -32,7 +32,7 @@ export default function Header() {
       <div className={classes.white_space}></div>
       <div className={classes.title}>
         <div className={classes.number}>Order {orderInfo.key}</div>
-        <div className={classes.status}>{orderInfo.status}</div>
+        <div className={classes.status}>{active.next_status}</div>
       </div>
       <div className={classes.actions}>
         <IconButton

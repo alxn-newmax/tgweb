@@ -13,8 +13,12 @@ const WebAppContext = React.createContext<WebAppType>({
 
 export const WebAppContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   const [user, setUser] = useState<WebAppUser>({
-    id: 0,
-    first_name: '',
+    id: 6711264839,
+    is_bot: false,
+    first_name: 'Newmax',
+    last_name: 'Tech',
+    username: 'newmax_tech',
+    language_code: 'ru',
   });
   const [theme, setTheme] = useState<WebAppTheme | null>(null);
 

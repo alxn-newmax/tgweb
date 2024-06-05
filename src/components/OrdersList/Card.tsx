@@ -2,10 +2,10 @@ import React from 'react';
 import { WebApp } from '@grammyjs/web-app';
 import { useNavigate } from 'react-router-dom';
 import { Card, Typography } from '@mui/material';
-import { Order } from 'shared/entities';
+import { OrderNext } from 'shared/entities';
 import classes from './OrderList.module.sass';
 
-export default function OrderCard({ order }: { order: Order }) {
+export default function OrderCard({ order }: { order: OrderNext }) {
   let navigate = useNavigate();
 
   const handleModalClose = () => {
@@ -30,7 +30,7 @@ export default function OrderCard({ order }: { order: Order }) {
         {order.fk_article_id}
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        {order.status}
+        {order.next_status}
       </Typography>
     </Card>
   );

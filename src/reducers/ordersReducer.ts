@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 import { RootState } from 'store';
-
-import { Order, History, OrderStatus } from 'shared/entities';
+import { Order, History, OrderStatus, OrderNext } from 'shared/entities';
 
 interface ActiveOrder {
   data: Order | null;
@@ -11,10 +9,11 @@ interface ActiveOrder {
     confirm: boolean;
     status: OrderStatus;
   }[];
+  next_status: OrderStatus;
 }
 
 export interface OrdersState {
-  list: Order[];
+  list: OrderNext[];
   active: ActiveOrder;
 }
 
@@ -23,6 +22,7 @@ const initialState: OrdersState = {
   active: {
     data: null,
     history: [],
+    next_status: 'read',
   },
 };
 
@@ -30,7 +30,7 @@ const orderReducer = createSlice({
   name: 'orders',
   initialState,
   reducers: {
-    setOrderList: (state: OrdersState, action: PayloadAction<Order[]>) => {
+    setOrderList: (state: OrdersState, action: PayloadAction<OrderNext[]>) => {
       state.list = action.payload;
     },
     setActiveOrder: (state: OrdersState, action: PayloadAction<ActiveOrder>) => {

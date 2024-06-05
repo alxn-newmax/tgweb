@@ -1,8 +1,10 @@
-import { OrderDto, ActiveOrderDto } from 'shared/dtos';
+import { ActiveOrderDto, OrderNextDto } from 'shared/dtos';
 import { AxiosService } from 'services/AxiosService';
 
-async function list(user_id: string): Promise<OrderDto[]> {
-  return AxiosService.post<{ data: OrderDto[] }>('/orders/list', { user_id }).then((response) => response.data.data);
+async function list(user_id: string): Promise<OrderNextDto[]> {
+  return AxiosService.post<{ data: OrderNextDto[] }>('/orders/list', { user_id }).then(
+    (response) => response.data.data
+  );
 }
 
 async function byId(order_key: string): Promise<{ order?: ActiveOrderDto; error?: any }> {

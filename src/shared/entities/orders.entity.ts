@@ -17,3 +17,7 @@ export interface Order {
   updated_at: string;
   deleted_at?: string | null;
 }
+
+export interface OrderNext extends Order {
+  next_status: OrderStatus;
+}

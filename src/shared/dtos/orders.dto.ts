@@ -64,11 +64,21 @@ export class OrderDto {
   deleted_at: string | null;
 }
 
+export class OrderNextDto extends OrderDto {
+  @IsString()
+  @IsNotEmpty()
+  next_status: OrderStatus;
+}
+
 export class ActiveOrderDto {
   data: OrderDto;
+
   history: {
     messages: HistoryDto[];
     confirm: boolean;
     status: OrderStatus;
   }[];
+
+  @IsString()
+  next_status: OrderStatus;
 }
