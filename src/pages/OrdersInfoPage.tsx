@@ -1,25 +1,29 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import Header from 'components/Header';
-import { OrdersApi } from 'api/OrdersApi';
-import OrderCard from 'components/OrderCard';
 import { useDispatch } from 'react-redux';
-import { setActiveOrder } from 'reducers/ordersReducer';
+import { useNavigate, useParams } from 'react-router-dom';
+import Header from 'components/Header';
+import OrderCard from 'components/OrderCard';
 import OrderHistory from 'components/OrderHistory';
+import { setActiveOrder } from 'reducers/ordersReducer';
+import { OrdersApi } from 'api/OrdersApi';
 
 export default function OrdersInfoPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { order_key } = useParams();
 
   useEffect(() => {
     async function fetchMe() {
-      const order = await OrdersApi.byId(order_key as string);
+      const { order, error } = await OrdersApi.byId(order_key as string);
+
+      if (error || !order) return navigate('/orders');
+
       dispatch(setActiveOrder(order));
     }
 
     fetchMe();
-  }, [dispatch, order_key]);
+  }, [dispatch, navigate, order_key]);
 
   return (
     <>

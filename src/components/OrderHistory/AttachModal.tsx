@@ -1,33 +1,35 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { IconButton, Modal, TextField } from '@mui/material';
-import Header from 'components/Header';
-import { images } from 'config/images';
-import { Close } from '@mui/icons-material';
-import { API_URL } from 'config';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { WebApp } from '@grammyjs/web-app';
-import classes from './OrderHistory.module.sass';
+import { Close } from '@mui/icons-material';
+import { IconButton, Modal, TextField } from '@mui/material';
+import { API_URL } from 'config';
+import { images } from 'config/images';
+import Header from 'components/Header';
+import ButtonConfirm from './ButtonConfirm';
+import ButtonInputFile from './ButtonInputFile';
 import CircularProgress from 'components/UI/CircularProgress';
 import { setActiveOrder } from 'reducers/ordersReducer';
 import { OrdersApi } from 'api/OrdersApi';
-import ButtonInputFile from './ButtonInputFile';
-import ButtonConfirm from './ButtonConfirm';
+import classes from './OrderHistory.module.sass';
 
 export default function AttachModal({ open, handleModalClose }: { open: boolean; handleModalClose: () => void }) {
-  const { order_key } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { order_key } = useParams();
 
   const [file, setFile] = useState<any>();
   const [message, setMessage] = useState('');
   const [progress, setProgress] = useState<number>(0);
 
   const fetchData = useCallback(async () => {
-    const order = await OrdersApi.byId(order_key as string);
+    const { order, error } = await OrdersApi.byId(order_key as string);
+
+    if (error || !order) return navigate('/orders');
+
     dispatch(setActiveOrder(order));
-    WebApp.ready();
-  }, [dispatch, order_key]);
+  }, [dispatch, navigate, order_key]);
 
   const handleConfirm = () => {
     const url = `${API_URL}/orders`;
@@ -87,7 +89,7 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
           ) : (
             <div className={classes.form_file}>
               <div className={classes.logo}>
-                <img src={images.excel_misc} alt="file logo" />
+                <img src={images.jpeg_misc} alt="file logo" />
               </div>
               <div className={`${classes.name}`}>
                 <div className="nowrap">{file.name}</div>

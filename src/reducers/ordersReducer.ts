@@ -31,8 +31,7 @@ const orderReducer = createSlice({
   initialState,
   reducers: {
     setOrderList: (state: OrdersState, action: PayloadAction<Order[]>) => {
-      const orders: Order[] = action.payload;
-      state.list = orders;
+      state.list = action.payload;
     },
     setActiveOrder: (state: OrdersState, action: PayloadAction<ActiveOrder>) => {
       state.active = action.payload;

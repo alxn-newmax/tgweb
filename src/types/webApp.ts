@@ -84,6 +84,11 @@ export interface WebAppTheme {
   params: ThemeParams;
 }
 
+export interface WebAppType {
+  user: WebAppUser;
+  theme: WebAppTheme | null;
+}
+
 interface WebAppChat {
   id: number;
   /**

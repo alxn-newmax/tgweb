@@ -1,14 +1,14 @@
-import { Button } from '@mui/material';
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import classes from './OrderHistory.module.sass';
-import AttachModal from './AttachModal';
-import { WebApp } from '@grammyjs/web-app';
-import { OrderStatus } from 'shared/entities';
-import { useParams } from 'react-router-dom';
-import { OrdersApi } from 'api/OrdersApi';
 import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { WebApp } from '@grammyjs/web-app';
+import styled from 'styled-components';
+import { Button } from '@mui/material';
+import AttachModal from './AttachModal';
+import { OrderStatus } from 'shared/entities';
 import { setActiveOrder } from 'reducers/ordersReducer';
+import { OrdersApi } from 'api/OrdersApi';
+import classes from './OrderHistory.module.sass';
 
 const ConfirmButton = styled(Button)({
   padding: '4px 16px',
@@ -31,6 +31,7 @@ const ConfirmButton = styled(Button)({
 
 export default function StatusActions({ status }: { status: OrderStatus }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { order_key } = useParams();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -47,7 +48,10 @@ export default function StatusActions({ status }: { status: OrderStatus }) {
 
   const handleUpdateStatus = async () => {
     await OrdersApi.updateStatus('confirm', order_key as string);
-    const order = await OrdersApi.byId(order_key as string);
+    const { order, error } = await OrdersApi.byId(order_key as string);
+
+    if (error || !order) return navigate('/orders');
+
     dispatch(setActiveOrder(order));
   };
 
