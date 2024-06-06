@@ -47,7 +47,7 @@ export default function StatusActions({ status }: { status: OrderStatus }) {
   };
 
   const handleUpdateStatus = async () => {
-    await OrdersApi.updateStatus('confirm', order_key as string);
+    await OrdersApi.updateStatus('update_time', order_key as string);
     const { order, error } = await OrdersApi.byId(order_key as string);
 
     if (error || !order) return navigate('/orders');
@@ -57,13 +57,13 @@ export default function StatusActions({ status }: { status: OrderStatus }) {
 
   return (
     <div className={classes.status_actions}>
-      {status === 'production' && (
+      {status === 'delivery' && (
         <ConfirmButton size="small" onClick={handleUpdateStatus}>
           In production
         </ConfirmButton>
       )}
       <ConfirmButton size="small" onClick={handleModalOpen}>
-        {status === 'production' ? 'Not started' : 'Confirm status'}
+        Confirm status
       </ConfirmButton>
       <AttachModal open={open} handleModalClose={handleModalClose} />
     </div>

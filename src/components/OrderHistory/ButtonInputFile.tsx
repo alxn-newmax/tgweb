@@ -29,7 +29,7 @@ export default function ButtonInputFile({ handleChangeInputFile }: { handleChang
         padding: '8px',
         borderRadius: '50%',
         bgcolor: 'transparent',
-        color: '#000',
+        color: 'var(--link-color)',
         boxShadow: 'none',
         ':hover': {
           bgcolor: 'transparent !important',

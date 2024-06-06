@@ -14,8 +14,7 @@ const OrdersInfoPage = lazy(() => import('./pages/OrdersInfoPage'));
 export default function App() {
   const webApp = useContext(WebAppContext);
 
-  // const isAuth = true;
-  const isAuth = Boolean(webApp.user);
+  const isAuth = Boolean(webApp.user.id);
 
   return (
     <BrowserRouter>

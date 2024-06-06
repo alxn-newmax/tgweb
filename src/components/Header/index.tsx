@@ -43,6 +43,7 @@ export default function Header() {
             handleSnackbarOpen();
             navigator.clipboard.writeText(orderInfo.key);
           }}
+          sx={{color: 'var(--link-color)'}}
         >
           <ContentCopy fontSize="small" />
         </IconButton>
@@ -53,6 +54,7 @@ export default function Header() {
         onClose={handleSnackbarClose}
         key={orderInfo.id}
         autoHideDuration={800}
+        sx={{ top: '15px' }}
       >
         <div className={classes.snackbar_content}>Order number copied</div>
       </Snackbar>

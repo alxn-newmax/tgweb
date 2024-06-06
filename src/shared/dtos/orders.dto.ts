@@ -37,7 +37,7 @@ export class OrderDto {
 
   @IsString()
   @IsEmpty()
-  desc_sewing: string | null;
+  desc_production: string | null;
 
   @IsString()
   @IsEmpty()

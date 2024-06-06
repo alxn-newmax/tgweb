@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_URL } from 'config';
 
-axios.defaults.baseURL = API_URL
+axios.defaults.baseURL = API_URL;
 
 interface IErrors {
   [key: string]: string | string[];
@@ -21,9 +21,8 @@ function processError(error: any): IErrors {
 
   if (error.response) {
     // The client was given an error response (5xx, 4xx)
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
+    console.log({ data: error.response.data, status: error.response.status, headers: error.response.headers });
+
     if (error.response.status > 0) {
       errorAttributes.status = error.response.status;
       errorAttributes.statusText = error.request.statusText;

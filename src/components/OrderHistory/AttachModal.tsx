@@ -34,6 +34,10 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
   const handleConfirm = () => {
     const url = `${API_URL}/orders`;
 
+    setFile(null);
+    setMessage('');
+    handleModalClose();
+
     const config = {
       headers: { 'content-type': 'multipart/form-data' },
       onUploadProgress: function (e: any) {
@@ -54,9 +58,6 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
       .post(url, formData, config)
       .then((res) => {
         fetchData();
-        setFile(null);
-        setMessage('');
-        handleModalClose();
       })
       .catch((error) => {
         console.error('Error uploading files: ', error);
@@ -96,7 +97,12 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
               </div>
               <div className={classes.actions}>
                 {file && !isLoadingFile ? (
-                  <IconButton aria-label="launch" color="primary" size="small" onClick={() => setFile(null)}>
+                  <IconButton
+                    aria-label="launch"
+                    size="small"
+                    sx={{ color: 'var(--link-color)' }}
+                    onClick={() => setFile(null)}
+                  >
                     <Close />
                   </IconButton>
                 ) : (

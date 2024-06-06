@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900')
 @import './colors'
+@import './not_found'
 
 *
   padding: 0
@@ -13,7 +14,8 @@ body
   position: relative
   font-family: "Inter", sans-serif
   font-style: normal
-  background-color: #F5F5F5
+  color: var(--text-color)
+  background-color: var(--bg-color)
 
   --root-padding: 15px
 
@@ -27,9 +29,6 @@ li
 button
   border: none
   cursor: pointer
-
-.MuiSnackbar-root
-  top: 15px !important
 
 .nowrap
   max-width: 200px

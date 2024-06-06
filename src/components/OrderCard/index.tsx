@@ -1,10 +1,9 @@
-import { IconButton } from '@mui/material';
-import { images } from 'config/images';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ordersSelector } from 'reducers/ordersReducer';
+import { IconButton } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { API_URL } from 'config';
+import { images } from 'config/images';
+import { ordersSelector } from 'reducers/ordersReducer';
 import classes from './OrderCard.module.sass';
 
 export default function OrderCard() {
@@ -26,11 +25,11 @@ export default function OrderCard() {
       </div>
       <div className={classes.actions}>
         <IconButton
-          href={API_URL + orderInfo.doc_link}
+          href={orderInfo.doc_link}
           target="_blank"
           aria-label="launch"
-          color="primary"
           size="small"
+          sx={{ color: 'var(--link-color)' }}
         >
           <LaunchIcon />
         </IconButton>

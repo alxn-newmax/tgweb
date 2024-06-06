@@ -1,4 +1,5 @@
 import React from 'react';
+import { capitalize } from '@mui/material';
 import { History, OrderStatus } from 'shared/entities';
 import { statusDescEnum } from 'shared/enums';
 import StatusActions from './StatusActions';
@@ -12,7 +13,7 @@ export default function HistoryItems({
 }) {
   return (
     <div className={classes.status}>
-      <div className={classes.title}>{data.status}</div>
+      <div className={classes.title}>{capitalize(data.status)}</div>
       <div className={classes.desc}>{statusDescEnum[data.status]}</div>
       <StatusMessages items={data.messages} />
       {!data.confirm && <StatusActions status={data.status} />}

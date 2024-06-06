@@ -1,5 +1,5 @@
 .OrderList
-  margin: var(--root-padding  )
+  margin: var(--root-padding)
   display: grid
   grid-template-columns: 1fr 1fr
   gap: 15px
@@ -13,13 +13,17 @@
   font-weight: 400
   aspect-ratio: 1 / 1 
   border-radius: 12px
+  background-color: var(--primary-purpule)
   box-shadow: none
-  background-color: #E5ECF6
+  user-select: none
+  &:hover
+    cursor: pointer
 
 .QuantityOrders
   padding: 15px 0
   display: flex
   justify-content: center
+  gap: 15px 
   .content
     display: flex
     flex-direction: column
@@ -29,9 +33,9 @@
     font-size: 24px
     font-weight: bold
   .desc
-    color:  #707A89
+    color:  var(--subtitle-text-color)
     font-size: 12px
     font-weight: 500
 
 .delivery
-  background-color: #BAEDBD
+  background-color: var(--secondary-mint)

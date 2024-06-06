@@ -19,7 +19,13 @@ export default function Message({ value }: { value: string }) {
           <div className="nowrap">{value.split('/').slice(-1)[0]}</div>
         </div>
         <div className={classes.download}>
-          <IconButton href={API_URL + value} target="_blank" aria-label="launch" color="primary" size="small">
+          <IconButton
+            href={API_URL + value}
+            target="_blank"
+            aria-label="launch"
+            size="small"
+            sx={{ color: 'var(--link-color)' }}
+          >
             <DownloadIcon />
           </IconButton>
         </div>

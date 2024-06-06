@@ -1,6 +1,6 @@
 .OrderHistory
   margin: var(--root-padding)
-  background-color: #E5ECF6
+  background-color: var(--primary-blue)
   border-radius: 12px
 
 .status
@@ -8,7 +8,7 @@
   display: flex
   flex-direction: column
   gap: 4px
-  border-bottom: 1px solid #fff
+  border-bottom: 1px solid var(--fieldset-border)
   &:last-child
     border: none
 
@@ -18,7 +18,7 @@
   
 .desc
   font-size: 12px
-  color: #7F85A2
+  color: var(--subtitle-text-color)
   max-width: 80%
 
 .status_actions
@@ -35,7 +35,7 @@
 .message
   padding: 8px
   font-size: 12px
-  background-color: rgba(54, 151, 241, .1)
+  background-color: var(--primary-cyan)
   border-radius: 8px
   &.file
     display: flex
@@ -47,16 +47,15 @@
       width: 36px
       aspect-ratio: 1 / 1
       border-radius: 4px
-      background-color: rgba(143, 82, 204, .15)
+      background-color: var(--secondary-cyan)
       overflow: hidden
       img
-        object-fit: cover
         width: 100%
         height: 100%
+        object-fit: cover
     .name
       flex-grow: 1
-    .download
-      color: #7F85A2
+      color: var(--subtitle-text-color)
 
 
 .actions
@@ -79,7 +78,6 @@
   align-items: center
   flex-grow: 2
   border-radius: 12px
-  background-color: #F7F7F7
   img
     width: 55%
     margin: 0 auto
@@ -102,7 +100,7 @@
   flex-direction: row
   align-items: center
   gap: 8px
-  background-color: #F7F7F7
+  background-color: var(--primary-purpule50)
   border-radius: 12px
   .logo
     display: flex
