@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEmpty } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 import { OrderStatus } from 'shared/entities';
 
 export class HistoryDto {
@@ -11,13 +11,13 @@ export class HistoryDto {
   status: OrderStatus;
 
   @IsString()
-  @IsEmpty()
-  desc: string | null;
-  
+  @IsNotEmpty()
+  desc: string;
+
   @IsString()
   @IsNotEmpty()
   fk_order_id: string;
-  
+
   @IsString()
   @IsNotEmpty()
   created_at: string;

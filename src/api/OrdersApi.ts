@@ -12,7 +12,7 @@ async function byId(order_key: string): Promise<{ order?: ActiveOrderDto; error?
     .then((response) => {
       return { order: response.data };
     })
-    .catch((err) => ({ error: err.response.data }));
+    .catch((err) => ({ error: err }));
 }
 
 async function updateStatus(message: string, order_key: string): Promise<ActiveOrderDto> {

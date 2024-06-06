@@ -1,4 +1,4 @@
-export type OrderStatus = 'unread' | 'read' | 'fabric' | 'production' | 'delivery' | 'done';
+export type OrderStatus = 'unread' | 'fabric' | 'production' | 'delivery' | 'done';
 
 export interface Order {
   id: string;

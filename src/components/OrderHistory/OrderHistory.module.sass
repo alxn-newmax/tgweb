@@ -32,19 +32,50 @@
   flex-direction: column
   gap: 4px
   
+.row
+  display: block
+  width: 100%
+  &.type_chat
+    .message_out
+      padding: 4px 0
+      display: flex
+      flex-direction: column
+      align-items: flex-end
+    .message
+      padding-bottom: 30px
+      max-width: 85%
+      display: flex
+      flex-direction: column
+      align-items: flex-end
+      gap: 4px
+      .file
+        margin-left: 68px
+        .logo
+          height: calc( 100% - 2 * 4px )
+          position: absolute
+          left: 4px
+          top: 4px
+          border-radius: 8px
+        .name
+          max-width: 120px
+
+
 .message
   padding: 8px
-  font-size: 12px
+  min-width: 100px
+  position: relative
+  font-size: 14px
   background-color: var(--primary-cyan)
   border-radius: 8px
-  &.file
+
+  .file
     display: flex
     flex-direction: row
     align-items: center
     gap: 8px
     color: #7F85A2
     .logo
-      width: 36px
+      height: 36px
       aspect-ratio: 1 / 1
       border-radius: 4px
       background-color: var(--secondary-cyan)
@@ -56,6 +87,12 @@
     .name
       flex-grow: 1
       color: var(--subtitle-text-color)
+  .time
+    position: absolute
+    bottom: 8px
+    right: 8px
+    color: var(--subtitle-text-color)
+    font-size: 12px
 
 
 .actions
@@ -70,17 +107,24 @@
   height: 100%
   display: flex
   flex-direction: column
-  background-color: #fff
-.messages_null
+  background-color: var(--primary-light)
+.messages_list
   margin: var(--root-padding)  
   padding: 12px
-  display: flex
-  align-items: center
   flex-grow: 2
   border-radius: 12px
+  overflow: scroll
+  .list
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+    justify-content: flex-end
   img
     width: 55%
     margin: 0 auto
+  &.center
+    align-items: center
+    justify-content: center
 .messages_form
   margin: var(--root-padding)
   display: flex

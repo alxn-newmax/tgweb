@@ -2,13 +2,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 import { Order, History, OrderStatus, OrderNext } from 'shared/entities';
 
+export interface IHistory {
+  messages: History[];
+  confirm: boolean;
+  status: OrderStatus;
+}
+
 interface ActiveOrder {
   data: Order | null;
-  history: {
-    messages: History[];
-    confirm: boolean;
-    status: OrderStatus;
-  }[];
+  history: IHistory[];
   next_status: OrderStatus;
 }
 
@@ -22,7 +24,7 @@ const initialState: OrdersState = {
   active: {
     data: null,
     history: [],
-    next_status: 'read',
+    next_status: 'fabric',
   },
 };
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Close } from '@mui/icons-material';
@@ -7,10 +7,11 @@ import { IconButton, Modal, TextField } from '@mui/material';
 import { API_URL } from 'config';
 import { images } from 'config/images';
 import Header from 'components/Header';
+import MessagesList from './MessagesList';
 import ButtonConfirm from './ButtonConfirm';
 import ButtonInputFile from './ButtonInputFile';
 import CircularProgress from 'components/UI/CircularProgress';
-import { setActiveOrder } from 'reducers/ordersReducer';
+import { ordersSelector, setActiveOrder } from 'reducers/ordersReducer';
 import { OrdersApi } from 'api/OrdersApi';
 import classes from './OrderHistory.module.sass';
 
@@ -18,6 +19,7 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { order_key } = useParams();
+  const { active } = useSelector(ordersSelector);
 
   const [file, setFile] = useState<any>();
   const [message, setMessage] = useState('');
@@ -81,9 +83,8 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
     <Modal open={open} className={classes.MessageModal}>
       <div className={classes.content}>
         <Header />
-        <div className={classes.messages_null}>
-          <img src={images.null} alt="null" />
-        </div>
+        <MessagesList list={active.history} />
+
         <div className={classes.messages_form}>
           {!file ? (
             <TextField onChange={handleChangeTextField} label="Message" multiline rows={3} sx={{ width: '100%' }} />
