@@ -35,8 +35,6 @@ export const WebAppContextProvider: React.FC<{ children: React.ReactNode }> = (p
         backgroundColor: WebApp.backgroundColor,
         params: WebApp.themeParams,
       });
-
-      WebApp.expand();
     }
   }, [setUser, setTheme]);
 

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { WebApp } from '@grammyjs/web-app';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
-import AttachModal from './AttachModal';
 import { OrderStatus } from 'shared/entities';
 import { setActiveOrder } from 'reducers/ordersReducer';
 import { OrdersApi } from 'api/OrdersApi';
@@ -33,17 +32,10 @@ export default function StatusActions({ status }: { status: OrderStatus }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { order_key } = useParams();
-  const [open, setOpen] = useState<boolean>(false);
 
-  const handleModalClose = () => {
-    WebApp.BackButton.hide();
-    setOpen(false);
-  };
-
-  const handleModalOpen = () => {
+  const handleNavigate = () => {
     WebApp.BackButton.show();
-    WebApp.BackButton.onClick(handleModalClose);
-    setOpen(true);
+    navigate(`/orders/${order_key}/messages`);
   };
 
   const handleUpdateStatus = async () => {
@@ -62,10 +54,9 @@ export default function StatusActions({ status }: { status: OrderStatus }) {
           In production
         </ConfirmButton>
       )}
-      <ConfirmButton size="small" onClick={handleModalOpen}>
+      <ConfirmButton size="small" onClick={handleNavigate}>
         Confirm status
       </ConfirmButton>
-      <AttachModal open={open} handleModalClose={handleModalClose} />
     </div>
   );
 }

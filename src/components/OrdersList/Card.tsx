@@ -8,24 +8,13 @@ import classes from './OrderList.module.sass';
 export default function OrderCard({ order }: { order: OrderNext }) {
   let navigate = useNavigate();
 
-  const handleModalClose = () => {
-    WebApp.BackButton.hide();
-    navigate('/orders');
-  };
-
   const handleOpenOrder = () => {
     WebApp.BackButton.show();
-    WebApp.BackButton.onClick(handleModalClose);
     navigate(`/orders/${order.key}`);
   };
 
   return (
-    <Card
-      className={`${classes.OrderCard} ${classes[order.status]}`}
-      onClick={() => {
-        handleOpenOrder();
-      }}
-    >
+    <Card className={`${classes.OrderCard} ${classes[order.status]}`} onClick={() => handleOpenOrder()}>
       <Typography gutterBottom variant="h5" component="div">
         {order.fk_article_id}
       </Typography>

@@ -7,7 +7,7 @@ import { IconButton, Modal, TextField } from '@mui/material';
 import { API_URL } from 'config';
 import { images } from 'config/images';
 import Header from 'components/Header';
-import MessagesList from './MessagesList';
+import MessagesList from '../MessageList';
 import ButtonConfirm from './ButtonConfirm';
 import ButtonInputFile from './ButtonInputFile';
 import CircularProgress from 'components/UI/CircularProgress';
@@ -15,7 +15,7 @@ import { ordersSelector, setActiveOrder } from 'reducers/ordersReducer';
 import { OrdersApi } from 'api/OrdersApi';
 import classes from './OrderHistory.module.sass';
 
-export default function AttachModal({ open, handleModalClose }: { open: boolean; handleModalClose: () => void }) {
+export default function AttachModal() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { order_key } = useParams();
@@ -25,20 +25,12 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
   const [message, setMessage] = useState('');
   const [progress, setProgress] = useState<number>(0);
 
-  const fetchData = useCallback(async () => {
-    const { order, error } = await OrdersApi.byId(order_key as string);
-
-    if (error || !order) return navigate('/orders');
-
-    dispatch(setActiveOrder(order));
-  }, [dispatch, navigate, order_key]);
-
   const handleConfirm = () => {
     const url = `${API_URL}/orders`;
 
     setFile(null);
     setMessage('');
-    handleModalClose();
+    // handleModalClose();
 
     const config = {
       headers: { 'content-type': 'multipart/form-data' },
@@ -58,8 +50,12 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
 
     axios
       .post(url, formData, config)
-      .then((res) => {
-        fetchData();
+      .then(async (res) => {
+        const { order, error } = await OrdersApi.byId(order_key as string);
+
+        if (error || !order) return navigate('/orders');
+
+        dispatch(setActiveOrder(order));
       })
       .catch((error) => {
         console.error('Error uploading files: ', error);
@@ -80,10 +76,10 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
   const confirmBtnStatus = formStatus || isLoadingFile;
 
   return (
-    <Modal open={open} className={classes.MessageModal}>
+    <div className={classes.MessageModal}>
       <div className={classes.content}>
         <Header />
-        <MessagesList list={active.history} />
+        {/* <MessagesList list={active.history} /> */}
 
         <div className={classes.messages_form}>
           {!file ? (
@@ -127,6 +123,6 @@ export default function AttachModal({ open, handleModalClose }: { open: boolean;
           </div>
         </div>
       </div>
-    </Modal>
+    </div>
   );
 }

@@ -6,7 +6,7 @@ import classes from './OrderHistory.module.sass';
 export default function StatusMessages({ items }: { items: History[] }) {
   const messages: React.JSX.Element[] = [];
 
-  items.forEach((item) => item.desc && messages.push(<Message value={item.desc} />));
+  items.forEach((item, key) => item.desc && messages.push(<Message key={key} value={item.desc} />));
 
   if (!messages.length) return <></>;
 
