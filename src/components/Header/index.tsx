@@ -43,7 +43,7 @@ export default function Header() {
             handleSnackbarOpen();
             navigator.clipboard.writeText(orderInfo.key);
           }}
-          sx={{color: 'var(--link-color)'}}
+          sx={{ color: 'var(--link-color)' }}
         >
           <ContentCopy fontSize="small" />
         </IconButton>
