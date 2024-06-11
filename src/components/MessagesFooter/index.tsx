@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { WebApp } from '@grammyjs/web-app';
 import { Close } from '@mui/icons-material';
 import { IconButton, TextField } from '@mui/material';
 import { API_URL } from 'config';
@@ -57,11 +58,17 @@ export default function MessagesFooter() {
       .then(async (res) => {
         const { order, error } = await OrdersApi.byId(order_key as string);
 
-        if (error || !order) return navigate('/orders');
+        if (error || !order) {
+          WebApp.BackButton.hide();
+          return navigate('/orders');
+        }
 
         dispatch(setActiveOrder(order));
 
-        if (formData.get('file')) navigate(`/orders/${order_key}`);
+        if (formData.get('file')) {
+          WebApp.BackButton.hide();
+          navigate(`/orders/${order_key}`);
+        }
       })
       .catch((error) => {
         console.error('Error uploading files: ', error);
