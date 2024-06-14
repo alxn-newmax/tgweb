@@ -4,21 +4,22 @@ import { IconButton } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { images } from 'config/images';
 import { ordersSelector } from 'reducers/ordersReducer';
-import classes from './OrderCard.module.sass';
+import FileInfoSkeleton from './Skeleton';
+import classes from './FileInfo.module.sass';
 
-export default function OrderCard() {
+export default function FileInfo() {
   const { active } = useSelector(ordersSelector);
 
-  if (!active.data) return <></>;
+  if (!active.data) return <FileInfoSkeleton />;
 
   const orderInfo = active.data;
 
   return (
-    <div className={classes.order_card}>
+    <div className={classes.FileInfo}>
       <div className={classes.file_type}>
         <img src={images.excel_misc} alt="excel misc" />
       </div>
-      <div className="file-name">
+      <div className={classes.info}>
         <div className={classes.title}>{orderInfo.fk_article_id}</div>
         <div className={classes.file}>{orderInfo.doc_title + '.xlsx'}</div>
         <div className={classes.date}>{orderInfo.doc_date}</div>

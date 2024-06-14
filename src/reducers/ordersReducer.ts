@@ -17,6 +17,7 @@ interface ActiveOrder {
 export interface OrdersState {
   list: OrderNext[];
   active: ActiveOrder;
+  listLoading: boolean;
 }
 
 const initialState: OrdersState = {
@@ -26,6 +27,7 @@ const initialState: OrdersState = {
     history: [],
     next_status: 'fabric',
   },
+  listLoading: false,
 };
 
 const orderReducer = createSlice({
@@ -34,6 +36,7 @@ const orderReducer = createSlice({
   reducers: {
     setOrderList: (state: OrdersState, action: PayloadAction<OrderNext[]>) => {
       state.list = action.payload;
+      state.listLoading = true;
     },
     setActiveOrder: (state: OrdersState, action: PayloadAction<ActiveOrder>) => {
       state.active = action.payload;

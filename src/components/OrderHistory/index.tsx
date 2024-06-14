@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import { ordersSelector } from 'reducers/ordersReducer';
 import HistoryItems from './HistoryItems';
 import classes from './OrderHistory.module.sass';
+import OrderHistorySkeleton from './Skeleton';
 
 export default function OrderHistory() {
   const { active } = useSelector(ordersSelector);
 
-  if (!active.history.length) return <></>;
+  if (!active.data) return <OrderHistorySkeleton />;
 
   return (
     <div className={classes.OrderHistory}>

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import OrdersList from 'components/OrdersList';
 import UserProfile from 'components/UserProfile';
-import QuantityOrders from 'components/OrdersList/QuantityOrders';
+import QuantityOrders from 'components/QuantityOrders';
 import WebAppContext from 'store/webAppContext';
 import { setOrderList } from 'reducers/ordersReducer';
 import { OrdersApi } from 'api/OrdersApi';

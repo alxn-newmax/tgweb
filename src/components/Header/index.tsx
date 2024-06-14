@@ -5,6 +5,7 @@ import { ContentCopy } from '@mui/icons-material';
 import { IconButton, Snackbar } from '@mui/material';
 import { SnackbarState } from 'types';
 import { ordersSelector } from 'reducers/ordersReducer';
+import HeaderSkeleton from './Skeleton';
 import classes from './Header.module.sass';
 
 export default function Header() {
@@ -17,6 +18,11 @@ export default function Header() {
     horizontal: 'center',
   });
 
+  const handleClickCopied = () => {
+    handleSnackbarOpen();
+    navigator.clipboard.writeText(`#${orderInfo.key}`);
+  };
+
   const handleSnackbarOpen = () => {
     setSnackbarState({ ...snackbarState, open: true });
   };
@@ -25,7 +31,7 @@ export default function Header() {
     setSnackbarState({ ...snackbarState, open: false });
   };
 
-  if (!active.data) return <></>;
+  if (!active.data) return <HeaderSkeleton />;
 
   const orderInfo = active.data;
 
@@ -43,10 +49,7 @@ export default function Header() {
           aria-label="copy"
           color="primary"
           size="medium"
-          onClick={() => {
-            handleSnackbarOpen();
-            navigator.clipboard.writeText(orderInfo.key);
-          }}
+          onClick={handleClickCopied}
           sx={{ color: 'var(--link-color)' }}
         >
           <ContentCopy fontSize="small" />

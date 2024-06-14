@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from 'components/Header';
-import OrderCard from 'components/OrderCard';
+import FileInfo from 'components/FileInfo';
 import OrderHistory from 'components/OrderHistory';
 import { setActiveOrder } from 'reducers/ordersReducer';
 import { OrdersApi } from 'api/OrdersApi';
@@ -28,7 +28,7 @@ export default function OrdersInfoPage() {
   return (
     <>
       <Header />
-      <OrderCard />
+      <FileInfo />
       <OrderHistory />
     </>
   );
