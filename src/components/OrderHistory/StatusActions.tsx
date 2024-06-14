@@ -37,7 +37,7 @@ export default function StatusActions({ status }: { status: OrderStatus }) {
 
   const handleNavigate = () => {
     WebApp.BackButton.show();
-    navigate(`/orders/${order_key}/messages`);
+    navigate(`/orders/${order_key}/chat`);
   };
 
   const handleUpdateStatus = async () => {

@@ -1,13 +1,14 @@
 import './i18n';
 import React, { Suspense, useContext, lazy, useCallback, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { WebApp } from '@grammyjs/web-app';
 
 import { Box } from '@mui/material';
+import LoadingSpinner from './components/UI/LoadingSpinner';
+
 import WebAppContext from 'store/webAppContext';
 import { ProtectedRoute } from 'routes/protectedRoute';
-import LoadingSpinner from './components/UI/LoadingSpinner';
-import { WebApp } from '@grammyjs/web-app';
-import { useSelector } from 'react-redux';
 import { ordersSelector } from 'reducers/ordersReducer';
 
 const NotFound = lazy(() => import('./pages/NotFound'));
@@ -21,11 +22,12 @@ export default function App() {
   const webApp = useContext(WebAppContext);
   const { list } = useSelector(ordersSelector);
 
-  const isAuth = Boolean(webApp.user.id);
+  const isAuth = Boolean(webApp.user);
 
   const onBackClick = useCallback(() => {
-    const splash = location.pathname.lastIndexOf('/');
-    if (!list.length || splash === 7) WebApp.BackButton.hide();
+    const isOrderChat = location.pathname.endsWith('chat');
+    console.log(isOrderChat, location.pathname);
+    if (!list.length || !isOrderChat) WebApp.BackButton.hide();
     navigate(-1);
   }, [list.length, location, navigate]);
 
@@ -38,20 +40,22 @@ export default function App() {
     };
   }, [onBackClick]);
 
+  const Loading = () => (
+    <Box sx={{ height: 'var(--tg-viewport-stable-height)', width: '100vw' }}>
+      <LoadingSpinner />
+    </Box>
+  );
+
+  if (!webApp.verified) return <Loading />;
+
   return (
-    <Suspense
-      fallback={
-        <Box sx={{ height: 'var(--tg-viewport-stable-height)', width: '100vw' }}>
-          <LoadingSpinner />
-        </Box>
-      }
-    >
+    <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<NotFound />} />
         <Route element={<ProtectedRoute isAllowed={isAuth} redirectPath="/" />}>
           <Route path="/orders" element={<OrdersListPage />} />
           <Route path="/orders/:order_key" element={<OrdersInfoPage />} />
-          <Route path="/orders/:order_key/messages" element={<OrderMessagesPage />} />
+          <Route path="/orders/:order_key/chat" element={<OrderMessagesPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

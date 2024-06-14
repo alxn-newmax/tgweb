@@ -5,7 +5,9 @@ import { WebAppInitData, WebAppTheme, WebAppType, WebAppUser } from 'types';
 import { UsersApi } from 'api/UsersApi';
 import { useTranslation } from 'react-i18next';
 
-const userData: WebAppUser = {
+const ENV = 'test';
+
+const userTestData: WebAppUser = {
   id: 364984576,
   is_bot: false,
   first_name: 'Alexandr',
@@ -15,35 +17,33 @@ const userData: WebAppUser = {
 };
 
 const WebAppContext = React.createContext<WebAppType>({
-  user: {
-    id: 0,
-    first_name: '',
-  },
+  user: null,
   theme: null,
+  verified: false,
 });
 
 export const WebAppContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   const { i18n } = useTranslation();
-  const [user, setUser] = useState<WebAppUser>(userData);
+  const [user, setUser] = useState<WebAppUser | null>(null);
   const [theme, setTheme] = useState<WebAppTheme | null>(null);
+  const [verified, setVerified] = useState<boolean>(false);
 
   useEffect(() => {
-    const initData = { user: JSON.stringify(userData) } as object as WebAppInitData;
-    // const initData = qs.parse(WebApp.initData) as object as WebAppInitData;
+    const initData = qs.parse(WebApp.initData) as object as WebAppInitData;
 
-    async function setLocale(userData: WebAppUser) {
-      const language_code = await UsersApi.lang(String(userData.id));
+    // Remove this stroke
+    if (ENV === 'test') initData.user = JSON.stringify(userTestData);
+
+    async function parseUser(userData: string) {
+      const user = JSON.parse(userData) as WebAppUser;
+
+      const userInfo = await UsersApi.info(String(user.id));
+
       setUser({
-        ...userData,
-        language_code,
+        ...userInfo,
+        language_code: userInfo.locale_code,
       });
-      i18n.changeLanguage(language_code);
-    }
 
-    if (initData.user) {
-      const userData = JSON.parse(initData.user) as WebAppUser;
-
-      setUser(userData);
       setTheme({
         colorScheme: WebApp.colorScheme,
         headerColor: WebApp.headerColor,
@@ -51,13 +51,18 @@ export const WebAppContextProvider: React.FC<{ children: React.ReactNode }> = (p
         params: WebApp.themeParams,
       });
 
-      setLocale(userData);
+      i18n.changeLanguage(userInfo.locale_code);
+
+      setVerified(true);
     }
+
+    if (initData.user) parseUser(initData.user);
   }, [setUser, setTheme, i18n]);
 
   const userValue: WebAppType = {
     user,
     theme,
+    verified,
   };
 
   return <WebAppContext.Provider value={userValue}>{props.children}</WebAppContext.Provider>;

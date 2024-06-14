@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { SelectChangeEvent } from '@mui/material/Select';
+import { InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 import classes from './UserProfile.module.sass';
 import WebAppContext from 'store/webAppContext';
 import { UsersApi } from 'api/UsersApi';
@@ -11,17 +9,18 @@ import { UsersApi } from 'api/UsersApi';
 export default function SelectLang() {
   const { i18n } = useTranslation();
   const webApp = useContext(WebAppContext);
-  const { id } = webApp.user;
 
-  const [lang, setLang] = useState(webApp.user.language_code);
+  const user = webApp.user as WebAppUser;
+
+  const [lang, setLang] = useState(user.language_code);
 
   useEffect(() => {
-    setLang(webApp.user.language_code);
-  }, [webApp.user.language_code]);
+    setLang(user.language_code);
+  }, [user.language_code]);
 
   const handleChange = async (event: SelectChangeEvent) => {
     const value = event.target.value;
-    await UsersApi.setLang(String(id), value);
+    await UsersApi.setLang(String(user.id), value);
     setLang(value);
     i18n.changeLanguage(value);
   };

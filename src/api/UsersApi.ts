@@ -1,7 +1,8 @@
 import { AxiosService } from 'services/AxiosService';
+import { UserDto } from 'shared/dtos';
 
-async function lang(user_id: string): Promise<string> {
-  return AxiosService.get<{ locale: string }>(`/locale/${user_id}`).then((response) => response.data.locale);
+async function info(user_id: string): Promise<UserDto> {
+  return AxiosService.get<{ data: UserDto }>(`/users/${user_id}`).then(({ data }) => data.data);
 }
 
 async function setLang(user_id: string, locale: string): Promise<string> {
@@ -11,6 +12,6 @@ async function setLang(user_id: string, locale: string): Promise<string> {
 }
 
 export const UsersApi = {
-  lang,
+  info,
   setLang,
 };

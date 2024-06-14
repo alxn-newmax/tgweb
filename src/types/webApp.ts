@@ -85,8 +85,9 @@ export interface WebAppTheme {
 }
 
 export interface WebAppType {
-  user: WebAppUser;
+  user: WebAppUser | null;
   theme: WebAppTheme | null;
+  verified: boolean;
 }
 
 interface WebAppChat {

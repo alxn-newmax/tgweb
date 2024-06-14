@@ -5,7 +5,10 @@ import SelectLang from './SelectLang';
 
 export default function UserProfile() {
   const webApp = useContext(WebAppContext);
-  const { first_name, last_name, username } = webApp.user;
+
+  const user = webApp.user as WebAppUser;
+
+  const { first_name, last_name, username } = user;
 
   return (
     <div className={classes.UserProfile}>
