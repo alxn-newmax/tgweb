@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { WebApp } from '@grammyjs/web-app';
 import styled from 'styled-components';
@@ -29,6 +30,7 @@ const ConfirmButton = styled(Button)({
 });
 
 export default function StatusActions({ status }: { status: OrderStatus }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { order_key } = useParams();
@@ -51,12 +53,18 @@ export default function StatusActions({ status }: { status: OrderStatus }) {
     <div className={classes.status_actions}>
       {status === 'delivery' && (
         <ConfirmButton size="small" onClick={handleUpdateStatus}>
-          In production
+          {t('statusActionsBtn.production')}
         </ConfirmButton>
       )}
-      <ConfirmButton size="small" onClick={handleNavigate}>
-        Confirm status
-      </ConfirmButton>
+      {status === 'done' ? (
+        <ConfirmButton size="small" onClick={handleUpdateStatus}>
+          {t('statusActionsBtn.delivered')}
+        </ConfirmButton>
+      ) : (
+        <ConfirmButton size="small" onClick={handleNavigate}>
+          {t('statusActionsBtn.confirm')}
+        </ConfirmButton>
+      )}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import './i18n/config';
 import React, { Suspense, useContext, lazy, useCallback, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 

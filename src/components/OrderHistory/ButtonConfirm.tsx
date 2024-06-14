@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 
 export default function ButtonConfirm({
@@ -10,6 +11,8 @@ export default function ButtonConfirm({
   disabled: boolean;
   handleConfirm: (e: any) => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <Button
       variant="contained"
@@ -29,7 +32,7 @@ export default function ButtonConfirm({
       onClick={handleConfirm}
       disabled={disabled}
     >
-      {`Send ${type}`}
+      {t(`orderChatPage.btnConfirm_${type}`)}
     </Button>
   );
 }

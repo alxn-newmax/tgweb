@@ -44,6 +44,10 @@ export class OrderDto {
   desc_delivery: string | null;
 
   @IsString()
+  @IsEmpty()
+  desc_done: string | null;
+
+  @IsString()
   @IsNotEmpty()
   fk_user_id: string;
 

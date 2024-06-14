@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ContentCopy } from '@mui/icons-material';
 import { IconButton, Snackbar } from '@mui/material';
@@ -7,6 +8,7 @@ import { ordersSelector } from 'reducers/ordersReducer';
 import classes from './Header.module.sass';
 
 export default function Header() {
+  const { t } = useTranslation();
   const { active } = useSelector(ordersSelector);
 
   const [snackbarState, setSnackbarState] = useState<SnackbarState>({
@@ -31,8 +33,10 @@ export default function Header() {
     <header className={classes.header}>
       <div className={classes.white_space}></div>
       <div className={classes.title}>
-        <div className={classes.number}>Order {orderInfo.key}</div>
-        <div className={classes.status}>{active.next_status}</div>
+        <div className={classes.number}>
+          {t('header.title')} {orderInfo.key}
+        </div>
+        <div className={classes.status}>{t(`statusList.${active.next_status}`)}</div>
       </div>
       <div className={classes.actions}>
         <IconButton
@@ -56,7 +60,7 @@ export default function Header() {
         autoHideDuration={800}
         sx={{ top: '15px' }}
       >
-        <div className={classes.snackbar_content}>Order number copied</div>
+        <div className={classes.snackbar_content}>{t('header.copied')}</div>
       </Snackbar>
     </header>
   );

@@ -26,6 +26,6 @@
     "outDir": "./build",
     "jsx": "react"
   },
-  "include": ["src", "declarations.d.ts"],
+  "include": ["src", "declarations.d.ts", "src/**/*.json"],
   "exclude": ["node_modules", "build"]
 }

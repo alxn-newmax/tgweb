@@ -11,6 +11,7 @@ export interface Order {
   desc_fabric?: string | null;
   desc_production?: string | null;
   desc_delivery?: string | null;
+  desc_done?: string | null;
   fk_user_id: string;
   fk_article_id: string;
   created_at: string;

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import WebAppContext from 'store/webAppContext';
 import classes from './UserProfile.module.sass';
+import SelectLang from './SelectLang';
 
 export default function UserProfile() {
   const webApp = useContext(WebAppContext);
@@ -16,6 +17,7 @@ export default function UserProfile() {
         {first_name} {last_name || ''}
       </div>
       {username && <div className={classes.username}>@{username}</div>}
+      <SelectLang />
     </div>
   );
 }

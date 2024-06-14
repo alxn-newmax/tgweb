@@ -1,12 +1,14 @@
 import React from 'react';
-import { WebApp } from '@grammyjs/web-app';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { WebApp } from '@grammyjs/web-app';
 import { Card, Typography } from '@mui/material';
 import { OrderNext } from 'shared/entities';
 import classes from './OrderList.module.sass';
 
 export default function OrderCard({ order }: { order: OrderNext }) {
-  let navigate = useNavigate();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const handleOpenOrder = () => {
     WebApp.BackButton.show();
@@ -19,7 +21,7 @@ export default function OrderCard({ order }: { order: OrderNext }) {
         {order.fk_article_id}
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        {order.next_status}
+        {t(`statusList.${order.next_status}`)}
       </Typography>
     </Card>
   );

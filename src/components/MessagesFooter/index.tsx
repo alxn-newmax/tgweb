@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { WebApp } from '@grammyjs/web-app';
@@ -15,6 +16,7 @@ import { setActiveOrder } from 'reducers/ordersReducer';
 import classes from './MessagesFooter.module.sass';
 
 export default function MessagesFooter() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { order_key } = useParams();
@@ -99,7 +101,7 @@ export default function MessagesFooter() {
         <TextField
           value={message}
           onChange={handleChangeTextField}
-          label="Message"
+          label={t('orderChatPage.textFieldLabel')}
           multiline
           rows={3}
           sx={{ width: '100%' }}
