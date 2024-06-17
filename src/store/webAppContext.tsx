@@ -5,7 +5,7 @@ import { WebAppInitData, WebAppTheme, WebAppType, WebAppUser } from 'types';
 import { UsersApi } from 'api/UsersApi';
 import { useTranslation } from 'react-i18next';
 
-const ENV = 'test';
+const ENV: string = 'prod';
 
 const userTestData: WebAppUser = {
   id: 364984576,

@@ -13,14 +13,14 @@ export const common = {
     confirm: '确认状态',
   },
   statusList: {
-    unread: '未读',
+    created: '创建',
     fabric: '生产',
     production: '生产中',
     delivery: '路上',
     done: '已交付',
   },
   statusDescList: {
-    unread: '订单已成功创建.',
+    created: '订单已成功创建.',
     fabric: '订单正在缝制中.',
     production: '订单正在生产中.',
     delivery: '订单正在运输中.',

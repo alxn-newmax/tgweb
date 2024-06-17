@@ -13,14 +13,14 @@ export const common = {
     confirm: 'Подтвердить статус',
   },
   statusList: {
-    unread: 'Не прочитано',
+    created: 'Заказ создан',
     fabric: 'На фабрике',
     production: 'В производстве',
     delivery: 'В пути',
     done: 'Доставлен',
   },
   statusDescList: {
-    unread: 'Заказ был успешно создан.',
+    created: 'Заказ был успешно создан.',
     fabric: 'Заказ отшивается.',
     production: 'Заказ в производстве.',
     delivery: 'Заказ в пути.',

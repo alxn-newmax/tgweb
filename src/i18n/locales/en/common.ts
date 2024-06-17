@@ -13,14 +13,14 @@ export const common = {
     confirm: 'Confirm status',
   },
   statusList: {
-    unread: 'Unread',
+    created: 'Created',
     fabric: 'Fabric',
     production: 'Production',
     delivery: 'Delivery',
     done: 'Done',
   },
   statusDescList: {
-    unread: 'The order was successfully created.',
+    created: 'The order was successfully created.',
     fabric: 'Fabric is ready.',
     production: 'Production is in progress.',
     delivery: 'Order is being delivered.',
